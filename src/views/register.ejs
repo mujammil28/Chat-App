@@ -4,8 +4,183 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        .left {
+            background-color: #00bc7b;
+            width: 50%;
+            height: 100%;
+            float: left;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .right {
+            width: 50%;
+            height: 100%;
+            float: right;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .register_image {
+            max-width: 30vw;
+            max-height: 30vh;
+            border-radius: 50%;
+        }
+
+        .content {
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .tagline {
+            font-family: Montserrat;
+            font-weight: 600;
+            font-size: 21px;
+            line-height: 25.6px;
+        }
+
+        .logo {
+            max-width: 20vw;
+            max-height: 20vh;
+            border-radius: 50%;
+
+        }
+
+        .welcome {
+            font-weight: 700;
+            font-size: 35px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .welcome1 {
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 1.5;
+            margin: 0;
+            color: #736F6F;
+        }
+
+        /* Form styling */
+        .register-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .register-input {
+            width: 300px;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 20px;
+            border: 1px solid #00bc7b;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .register-button {
+            width: 200px;
+            padding: 12px 20px;
+            border-radius: 30px;
+            background-color: #00bc7b;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+        }
+
+        .register-button:hover {
+            background-color: #28865d;
+        }
+
+        .login-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #00bc7b;
+            text-decoration: none;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Alert styling */
+        .alert {
+            display: none;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 16px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .alert.success {
+            background-color: #4CAF50;
+        }
+
+        .alert.error {
+            background-color: #f44336;
+        }
+
+        .alert.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
-    <h1>Registration Page</h1>
+  
+    <div class="left">
+        <div class="content">
+            <img class="register_image" src="/public/media/logoImg.png" alt="Register Image">
+            <p class="tagline">Step into a world where understanding meets action. <br>Get ready to explore, connect, and thrive.</p>
+        </div>
+    </div>
+    <div class="right">
+        <img class="logo" src="/public/media/logoImg.png" alt="logo">
+        <h3 class="welcome">Welcome Buddy!</h3>
+        
+        <!-- Registration Form -->
+        <form action="/register" method="post" class="register-form" id="register-form">
+            <input type="text" name="name" id="name" class="register-input" placeholder="Full Name" required>
+            <input type="email" name="email" id="email" class="register-input" placeholder="Email" required>
+            <input type="text" name="mobile" id="mobile" class="register-input" placeholder="Mobile" required>
+            <input type="password" name="password" id="password" class="register-input" placeholder="Password" required>
+            <button type="submit" class="register-button">Register</button>
+        </form>
+        <!-- Login Link -->
+        <a href="/login" class="login-link">Already have an account? Login</a>
+        <!-- Alert for registration -->
+        <div class="alert" id="register-alert"></div>
+    </div>
 </body>
 </html>

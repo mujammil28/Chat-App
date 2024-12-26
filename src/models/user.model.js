@@ -1,25 +1,28 @@
 export default class UserModel{
 
 
-            constructor(id,name,email,password){
+            constructor(id,name,email,mobile,password){
 
                     this.id=id;
                     this.name=name;
                     this.email=email;
+                    this.mobile=mobile;
                     this.password=password;
                     
             }
 
-            static addUser(name,email,password){
+            static addUser(name,email,mobile,password){
                 const newUser=new UserModel(
                     users.length+1,
                     name,
                     email,
+                    mobile,
                     password
 
                 )
 
                 users.push(newUser);
+                console.log(users);
             }
 
             static loginValidator(email,password){
@@ -36,4 +39,4 @@ export default class UserModel{
 }
 
 
-let users=[{email:'abc@123.com',password:'1234'}];
+let users=[{ id: 1,name: 'abc',email:'abc@123.com',password:'1234'}];

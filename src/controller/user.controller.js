@@ -38,9 +38,10 @@ export default class UserController{
 
             addNewUser(req,res){
 
-                const {name,email,password}=req.body;
-
-                const addUser=UserModel.addUser(name,email,password);
+                const {name,email,mobile,password}=req.body;
+            console.log(req.body);
+                const addUser=UserModel.addUser(name,email,mobile,password);
+                
                 res.render('login', { errorMessage: null });
                
             

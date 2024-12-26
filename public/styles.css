@@ -1,0 +1,124 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    background-color: #cfcfcf;
+    font-family: Montserrat;
+  }
+  
+.login-register{
+
+  display: flex; 
+  justify-content: space-between;
+ padding: 5px;
+ 
+}
+
+#user-register>button{
+
+  width: 15vw;
+  height: 5vh;
+  padding: 5px;
+  margin: 20px;
+  margin-right: 100px;
+  margin-top: 100px;
+  background: linear-gradient(to left,#00bc7b, #0e825a); 
+  border: white,1px,solid;
+  color: white;
+  border-radius: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#user-login>button{
+  width: 15vw;
+  height: 5vh;
+  margin: 20px;
+  margin-top: 100px;
+  background: linear-gradient(to right,#00bc7b, #0e825a); 
+  border: white,1px,solid;
+  color: white;
+  border-radius: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+  .container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+  }
+  
+  .circle {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background-color: #00bc7b;
+    z-index: 2;
+  transform: translate(-50%, -50%);
+  }
+  
+.circle>img{
+  
+  width: 180px;
+    height: 180px;
+    border-radius: 50%;
+
+}
+
+
+  .wave {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 2px solid #00bc7b;
+      transform: translate(-50%, -50%);
+    animation-name: wave;
+      animation-duration: 5s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+  }
+  
+  .wave-1{
+              
+              animation-delay: 0s;
+  }
+  
+  .wave-2{
+                  animation-delay: 1s;
+              animation-duration: 4s;
+  }
+  
+  
+  .wave-3{
+                  
+              animation-delay: 2s;
+              animation-duration: 5s;
+  }
+  
+  @keyframes wave{
+                  
+      from{
+                  transform: translate(-50%, -50%) scale(0.2);
+                  opacity: 1;
+      }
+      
+      to{
+                      transform: translate(-50%, -50%) scale(1.6);
+                  opacity: 0;
+      }
+  
+  }
+  
+  
+  
+  
