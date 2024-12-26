@@ -12,21 +12,22 @@ export default class UserController{
             postLogin(req,res){
                 //console.log(req.body);
                 const {email,password}=req.body;
-             
+                console.log(req.body)
                 const user= UserModel.loginValidator(
                     email, password
 
                 );
 
 
-                if(!user){
-                    return res.render('login', ()=>{
-                     
-                        res.send("user login failed!!!")
-                });
+                if(user){
+                    return res.render('chat');
+                }else{
+                    return res.render('login');
                 }
 
-                     res.send("Login Successfull!!!");
+               
+
+
                    //  res.render('dashboard')
             }
 
@@ -39,8 +40,8 @@ export default class UserController{
             addNewUser(req,res){
 
                 const {name,email,mobile,password}=req.body;
-            console.log(req.body);
-                const addUser=UserModel.addUser(name,email,mobile,password);
+                console.log(req.body);
+                UserModel.addUser(name,email,mobile,password);
                 
                 res.render('login', { errorMessage: null });
                

@@ -1,11 +1,12 @@
 import express from 'express';
 import UserController from './src/controller/user.controller.js'
 import path from 'path';
-
+import bodyParser from 'body-parser';
 
 const app=express();
 
 const userController=new UserController();
+app.use(bodyParser.json());
 
 app.use(express.urlencoded({extended:true}));
 app.set("view engine",'ejs');
