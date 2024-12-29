@@ -2,6 +2,9 @@ import express from 'express';
 import UserController from './src/controller/user.controller.js'
 import path from 'path';
 import bodyParser from 'body-parser';
+import http from 'http';
+import { Server } from 'socket.io';
+
 
 const app=express();
 
@@ -17,6 +20,9 @@ app.use(express.static('media'));
 const publicFold = path.resolve();
 app.use(express.static(path.join(publicFold, 'public')));
 app.use('/public',express.static(path.join(publicFold, 'public')));
+
+app.use(express.static('src/views'));
+
 
 
 app.get('/',(req, res)=>{
@@ -37,13 +43,33 @@ app.get('/register',userController.getUserRegister)
 app.get('/chat',userController.userChat)
 
 
-app.use(express.static('src/views'));
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: '*',
+        methods: ["GET", "POST"],
+    }
+});
+
+io.on('connection',(socket)=>{
+
+    console.log("Server socket connection established...")
+
+    socket.on('disconnect',()=>{
+
+        console.error("Server socket connection disconnected!!!");
+
+    })
+}
+
+
+)
 
 
 
 app.all('*',userController.pageNotFound );
 
-app.listen(3000,()=>{
+server.listen(3000,()=>{
 
         console.log("App is running on the port:3000");
 
