@@ -55,6 +55,41 @@ io.on('connection',(socket)=>{
 
     console.log("Server socket connection established...")
 
+   
+
+
+
+    socket.on('new_message',(message)=>{
+        const date=new Date();
+                    const months = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"];
+                    const day = date.getDate(); 
+                    const month = months[date.getMonth()]; 
+                    const year = date.getFullYear(); 
+                    const hours = date.getHours(); 
+                    const minutes = date.getMinutes(); 
+            const dateTime=` ${year}, ${month} ${day},  ${hours}:${minutes}`;
+
+        let userDetail={
+          
+            message:message,
+            dateTime:dateTime,
+
+        }
+
+        // const chatDataBase= new chatModel({
+        //         userName:socket.userName,
+        //         message:message,
+        //         dateTime:new Date(),
+
+        // })
+       // console.log(userDetail)
+        socket.broadcast.emit('send_message', userDetail);
+
+    })
+
+
     socket.on('disconnect',()=>{
 
         console.error("Server socket connection disconnected!!!");

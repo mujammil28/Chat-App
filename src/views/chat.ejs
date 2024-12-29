@@ -272,7 +272,7 @@
         <div id="chat-history" >
             
             
-            <div class="user1">
+            <!-- <div class="user1">
                 <div class="user-image">
                     <img src="public/media/logoImg.png">
                 </div>
@@ -287,169 +287,14 @@
                           </div>
                   
                </div> 
-            </div>
+            </div> -->
            
            
-            <div class="user2">
-                <div class="sender-chat-text">
-                  <div class="name-time">
-                    <div class="user-name">User2</div>
-                     <div class="chat-time">02:20 PM</div>
-                    </div>
-                        <div id="typed-text">
-                        Hello this is testing message send by user 2.
-                        </div>
-                     </div> 
-             <div class="user-image">
-                    <img src="public/media/logoImg.png">
-                </div>
-            </div>
+           
             
 
             
-            <div class="user1">
-                <div class="user-image">
-                    <img src="public/media/logoImg.png">
-                </div>
-                
-                <div class="chat-text">
-                    <div class="name-time">
-                      <div class="user-name">User1</div>
-                       <div class="chat-time">02:20 PM</div>
-                      </div>
-                          <div class="sender-text">
-                          Hello
-                          </div>
-                  
-               </div> 
-            </div>
             
-            
-            <div class="user2">
-                <div class="sender-chat-text">
-                    <div class="name-time">
-                      <div class="user-name">User2</div>
-                       <div class="chat-time">02:20 PM</div>
-                      </div>
-                          <div id="typed-text">
-                          Hello
-                          </div>
-                  
-               </div> 
-                <div class="user-image">
-             
-                    <img src="public/media/logoImg.png">
-                </div>
-            </div>
-            
-            
-            <div class="user1">
-                <div class="user-image">
-                    <img src="public/media/logoImg.png">
-                </div>
-                
-                <div class="chat-text">
-                    <div class="name-time">
-                      <div class="user-name">User1</div>
-                       <div class="chat-time">02:20 PM</div>
-                      </div>
-                          <div class="sender-text">
-                          Hello
-                          </div>
-                  
-               </div> 
-            </div>
-
-
-            <div class="user2">
-                <div class="sender-chat-text">
-                    <div class="name-time">
-                      <div class="user-name">User2</div>
-                       <div class="chat-time">02:20 PM</div>
-                      </div>
-                          <div id="typed-text">
-                          Hello 
-                         hello hii
-                          </div>
-                  
-               </div> 
-                <div class="user-image">
-             
-                    <img src="public/media/logoImg.png">
-                </div>
-            </div>
-            
-            
-            <div class="user1">
-                <div class="user-image">
-                    <img src="public/media/logoImg.png">
-                </div>
-                
-                <div class="chat-text">
-                    <div class="name-time">
-                      <div class="user-name">User1</div>
-                       <div class="chat-time">02:20 PM</div>
-                      </div>
-                          <div class="sender-text">
-                          Hello
-                          </div>
-                  
-               </div> 
-            </div>
-
-
-            <div class="user2">
-                <div class="sender-chat-text">
-                    <div class="name-time">
-                      <div class="user-name">User2</div>
-                       <div class="chat-time">02:20 PM</div>
-                      </div>
-                          <div id="typed-text">
-                          Hello
-                          </div>
-                  
-               </div> 
-                <div class="user-image">
-             
-                    <img src="public/media/logoImg.png">
-                </div>
-            </div>
-
-
-            <div class="user1">
-                <div class="user-image">
-                    <img src="public/media/logoImg.png">
-                </div>
-                
-                <div class="chat-text">
-                    <div class="name-time">
-                      <div class="user-name">User1</div>
-                       <div class="chat-time">02:20 PM</div>
-                      </div>
-                          <div class="sender-text">
-                          Hello
-                          </div>
-                  
-               </div> 
-            </div>
-            
-            
-            <div class="user2">
-                <div class="sender-chat-text">
-                    <div class="name-time">
-                      <div class="user-name">User2</div>
-                       <div class="chat-time">02:20 PM</div>
-                      </div>
-                          <div id="typed-text">
-                          Hello
-                          </div>
-                  
-               </div> 
-                <div class="user-image">
-             
-                    <img src="public/media/logoImg.png">
-                </div>
-            </div>
 
     </div>
         <div id="chat-box">
@@ -481,16 +326,143 @@
                     const chatTyping=document.getElementById('chat-typing');
                     const chatSendBtn=document.getElementById('chat-send-btn');
                     const chating=document.getElementById('chating');
-
-
-
+                    const typedText=document.getElementById('typed-text');
+                    const chatHistory=document.getElementById('chat-history');
+                
                     chating.addEventListener('submit',(event)=>{
 
                         event.preventDefault();
-                        const chatText=chatTyping.value;
-                        console.log(chatText);
-                    });
+                        const chatText=chatTyping.value.trim();
+                         
+                        if(chatText){
+                            console.log(chatText);
+                        
+                     const userSecond=document.createElement("div")
+                     userSecond.className="user2";
+                     chatHistory.appendChild(userSecond);
 
+                    const senderChatText=document.createElement("div");
+                    senderChatText.className="sender-chat-text";
+                    userSecond.appendChild(senderChatText);
+
+                    const nameTime=document.createElement("div");
+                    nameTime.className="name-time";
+                    senderChatText.appendChild(nameTime);
+
+                    const userName=document.createElement("div");
+                    userName.className="user-name";
+                    userName.innerText="You (John)"
+                    nameTime.appendChild(userName);
+
+                    const chatTime=document.createElement("div");
+                    chatTime.className="chat-time";
+                    const date=new Date();
+                    const months = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"];
+                    const day = date.getDate(); 
+                    const month = months[date.getMonth()]; 
+                    const year = date.getFullYear(); 
+                    const hours = date.getHours(); 
+                    const minutes = date.getMinutes(); 
+                    chatTime.innerText=` ${year}, ${month} ${day},  ${hours}:${minutes}`;
+                    nameTime.appendChild(chatTime);
+
+                    const typedText=document.createElement("div");
+                    typedText.id="typed-text";
+                    senderChatText.appendChild(typedText);
+                        
+                    const userImage=document.createElement("div");
+                    userImage.className="user-image";
+                    userSecond.appendChild(userImage);
+
+                    const image=document.createElement("img");
+                    image.src="public/media/logoImg.png";
+                    image.alt="User Image";
+                    userImage.appendChild(image);
+
+                     
+                    const typedTextChild=document.createElement("div");
+                    typedTextChild.innerText=chatText;
+                    typedText.appendChild(typedTextChild);
+
+                    socket.emit('new_message',chatText);
+                        
+                       chatTyping.value="";
+                       chatHistory.scrollTop = chatHistory.scrollHeight;
+
+
+                        }
+                        
+                    });
+                    
+
+               
+                    socket.on('send_message',(userDetail)=>{
+                
+                
+                        console.log(userDetail.dateTime)
+                        
+                        const messageEle=document.createElement("div");
+
+                //2024-12-24T10:30:20.484Z
+                const userFirst=document.createElement("div")
+                    userFirst.className="user1";
+                     chatHistory.appendChild(userFirst);
+
+                const userImage=document.createElement("div");
+                    userImage.className="user-image";
+                    userFirst.appendChild(userImage);
+
+                    const image=document.createElement("img");
+                    image.src="public/media/logoImg.png";
+                    image.alt="User Image";
+                    userImage.appendChild(image);
+
+
+             
+
+                    const chatingText=document.createElement("div");
+                    chatingText.className="chat-text";
+                    userFirst.appendChild(chatingText);
+
+                    const nameTime=document.createElement("div");
+                    nameTime.className="name-time";
+                    chatingText.appendChild(nameTime);
+
+                    const userName=document.createElement("div");
+                    userName.className="user-name";
+                    userName.innerText="You (John)"
+                    nameTime.appendChild(userName);
+
+                    const chatTime=document.createElement("div");
+                    chatTime.className="chat-time";
+                    const date=new Date();
+                    const months = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"];
+                    const day = date.getDate(); 
+                    const month = months[date.getMonth()]; 
+                    const year = date.getFullYear(); 
+                    const hours = date.getHours(); 
+                    const minutes = date.getMinutes(); 
+                    chatTime.innerText=` ${year}, ${month} ${day},  ${hours}:${minutes}`;
+                    nameTime.appendChild(chatTime);
+
+                    const senderText=document.createElement("div");
+                    senderText.id="sender-text";
+                    chatingText.appendChild(senderText);
+                        
+                    
+
+                     
+                    const typedTextChild=document.createElement("div");
+                    typedTextChild.innerText=userDetail.message;
+                    senderText.appendChild(typedTextChild);
+
+               
+
+            })                   
                     
 
 
