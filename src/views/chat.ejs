@@ -180,6 +180,7 @@
                 align-items:start;
                 text-align:start;
                 margin:10px;
+           
             }
 
 
@@ -198,11 +199,11 @@
                 grid-template-rows:1fr;
                 background-color:white;
                 border:1.5px solid #00bc7b;
+                width:40vw; 
                border-radius:20px;
                 height:auto;
                 min-height:5vh;
-                margin:20px;
-                margin:10px;
+                margin:0px 20px 20px 20px;
                 width:auto;
                 max-width:40vw;
                 padding:5px;
@@ -217,12 +218,11 @@
                 min-height:5vh;
                margin:20px;
                background-color:rgb(183, 243, 222);
-                width:40vw; border:1.5px solid #00bc7b;
+                width:40vw; 
+                border:1.5px solid #00bc7b;
                border-radius:20px;
-                height:auto;
                 min-height:5vh;
                 margin:20px;
-                margin:10px;
                 width:auto;
                 max-width:40vw;
                 padding:5px;
@@ -290,7 +290,22 @@
             </div> -->
            
            
-           
+           <!--  <div class="user2">
+                <div class="sender-chat-text">
+                    <div class="name-time">
+                      <div class="user-name">User2</div>
+                       <div class="chat-time">02:20 PM</div>
+                      </div>
+                          <div id="typed-text">
+                          Hello
+                          </div>
+                  
+               </div> 
+                <div class="user-image">
+             
+                    <img src="public/media/logoImg.png">
+                </div>
+            </div> -->
             
 
             
@@ -363,7 +378,11 @@
                     const day = date.getDate(); 
                     const month = months[date.getMonth()]; 
                     const year = date.getFullYear(); 
-                    const hours = date.getHours(); 
+                    let hours = date.getHours(); 
+                     
+                    if(hours==0){
+                        hours=12;
+                    }
                     const minutes = date.getMinutes(); 
                     chatTime.innerText=` ${year}, ${month} ${day},  ${hours}:${minutes}`;
                     nameTime.appendChild(chatTime);
@@ -444,13 +463,17 @@
                     const day = date.getDate(); 
                     const month = months[date.getMonth()]; 
                     const year = date.getFullYear(); 
-                    const hours = date.getHours(); 
+                    let hours = date.getHours(); 
+                   
+                    if(hours==0){
+                        hours=12;
+                    }
                     const minutes = date.getMinutes(); 
                     chatTime.innerText=` ${year}, ${month} ${day},  ${hours}:${minutes}`;
                     nameTime.appendChild(chatTime);
 
                     const senderText=document.createElement("div");
-                    senderText.id="sender-text";
+                    senderText.className="sender-text";
                     chatingText.appendChild(senderText);
                         
                     

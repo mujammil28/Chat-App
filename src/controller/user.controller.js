@@ -39,9 +39,13 @@ export default class UserController{
 
             addNewUser(req,res){
 
-                const {name,email,mobile,password}=req.body;
-                console.log(req.body);
-                UserModel.addUser(name,email,mobile,password);
+                const {name,email,password}=req.body;
+                console.log(req.file); // Should log file details
+                if (!req.file) {
+                    return res.status(400).send('File not uploaded');
+                }
+                const image="images/"+req.file.filename;
+                UserModel.addUser(name,email,image,password);
                 
                 res.render('login', { errorMessage: null });
                

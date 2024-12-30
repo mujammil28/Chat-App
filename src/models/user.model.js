@@ -1,22 +1,22 @@
 export default class UserModel{
 
 
-            constructor(id,name,email,mobile,password){
+            constructor(id,name,email,image,password){
 
                     this.id=id;
                     this.name=name;
                     this.email=email;
-                    this.mobile=mobile;
+                    this.image=image;
                     this.password=password;
                     
             }
 
-            static addUser(name,email,mobile,password){
+            static addUser(name,email,image,password){
                 const newUser=new UserModel(
                     users.length+1,
                     name,
                     email,
-                    mobile,
+                    image,
                     password
 
                 )

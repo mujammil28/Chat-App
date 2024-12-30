@@ -4,7 +4,7 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import http from 'http';
 import { Server } from 'socket.io';
-
+import { uploadFile } from './src/middlewares/multerMiddleware.js';
 
 const app=express();
 
@@ -36,9 +36,11 @@ app.get('/login',userController.getUserLogin)
 
 
 
-app.post('/register',userController.addNewUser)
+app.post('/register',uploadFile.single('image'),userController.addNewUser)
 
 app.get('/register',userController.getUserRegister)
+
+
 
 app.get('/chat',userController.userChat)
 
