@@ -22,6 +22,7 @@ export default class UserModel{
                 )
 
                 users.push(newUser);
+                global.newUser = newUser;
                 console.log(users);
             }
 
@@ -38,5 +39,7 @@ export default class UserModel{
 
 }
 
+//export const userDetails=newUser;
+export let newUser = null;
 
 let users=[{ id: 1,name: 'abc',email:'abc@123.com',password:'1234'}];

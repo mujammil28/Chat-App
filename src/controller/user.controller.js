@@ -20,7 +20,7 @@ export default class UserController{
 
 
                 if(user){
-                    return res.render('chat');
+                    return res.render('chat',{user:user});
                 }else{
                     return res.render('login');
                 }

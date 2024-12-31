@@ -58,7 +58,7 @@ io.on('connection',(socket)=>{
     console.log("Server socket connection established...")
 
    
-
+   
 
 
     socket.on('new_message',(message)=>{
@@ -75,9 +75,10 @@ io.on('connection',(socket)=>{
 
         let userDetail={
           
-            message:message,
+            message:message.message,
             dateTime:dateTime,
-
+            name:message.uName,
+            image:message.image,
         }
 
         // const chatDataBase= new chatModel({

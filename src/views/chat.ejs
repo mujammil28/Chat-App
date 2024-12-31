@@ -66,7 +66,7 @@
             width: 80vw;
             height: 100%;
             display: grid;
-            grid-template-columns: 1fr 1fr 4fr;
+            grid-template-columns: 2fr 1fr 4fr;
             justify-content:start;
             align-items: center;
             background: rgb(255, 255, 255, 0.7); 
@@ -119,17 +119,38 @@
                     border:1px solid white;
         }
 
-        .user-image, .user-name{
+         .user-name{
             margin-right:20px;
+            color: rgb(146, 146, 146);
+            font-size: 14px;
+            font-style: italic;
 
         }
-        .user-image>img{
-                height:8vh;
-                width:auto;
-                object-fit:fill;
-                border-radius:50%;
-             
+
+
+        .chat-time{
+
+            color: rgb(95, 95, 95);
+            font-size: 14px;
+            font-style: italic;
+
+
         }
+
+        .user-image{
+            margin-right:20px;
+            background-color: transparent;
+        }
+
+        .user-image>img {
+    height: auto;
+    width: auto;
+    object-fit: fill;
+    border-radius: 50%;
+    max-width: 4vw;
+    min-height: 7vh;
+    max-height: 8vh;
+}
 
 #chat-history::-webkit-scrollbar {
     width: 8px; 
@@ -266,7 +287,7 @@
     <div class="chat-area" id="chat-box-section">
        
         <div id="chat-header">
-            <div id="user-name" class="chat-header">Welcome User1</div>
+            <div id="user-name" class="chat-header">Welcome &nbsp; <%=user.name %></div>
             <div id="user-typing" class="chat-header">User Typing....</div>
         </div>
         <div id="chat-history" >
@@ -308,8 +329,8 @@
             </div> -->
             
 
-            
-            
+            <div id="own-user-name" style="display: none;"><%=user.name %></div>
+            <div id="own-user-image" style="display: none;"><%=user.image%></div>
 
     </div>
         <div id="chat-box">
@@ -336,14 +357,16 @@
 
     <script >
                        const socket = io(); // Automatically connects to the same host
-
-
+                 
+                 
                     const chatTyping=document.getElementById('chat-typing');
                     const chatSendBtn=document.getElementById('chat-send-btn');
                     const chating=document.getElementById('chating');
                     const typedText=document.getElementById('typed-text');
                     const chatHistory=document.getElementById('chat-history');
-                
+                    const ownUserName=document.getElementById('own-user-name');
+                    const ownUserImage=document.getElementById('own-user-image');
+
                     chating.addEventListener('submit',(event)=>{
 
                         event.preventDefault();
@@ -366,7 +389,8 @@
 
                     const userName=document.createElement("div");
                     userName.className="user-name";
-                    userName.innerText="You (John)"
+                    
+                    userName.innerText="You("+ownUserName.innerHTML+")";
                     nameTime.appendChild(userName);
 
                     const chatTime=document.createElement("div");
@@ -379,12 +403,15 @@
                     const month = months[date.getMonth()]; 
                     const year = date.getFullYear(); 
                     let hours = date.getHours(); 
-                     
-                    if(hours==0){
-                        hours=12;
-                    }
+                    let ampm='AM';
+
+                    if(hours>12){
+                        hours=hours-12;
+                         ampm='PM'; 
+                        }
+                  
                     const minutes = date.getMinutes(); 
-                    chatTime.innerText=` ${year}, ${month} ${day},  ${hours}:${minutes}`;
+                    chatTime.innerText=` ${year}, ${month} ${day},  ${hours}:${minutes}  ${ampm}`;
                     nameTime.appendChild(chatTime);
 
                     const typedText=document.createElement("div");
@@ -396,7 +423,7 @@
                     userSecond.appendChild(userImage);
 
                     const image=document.createElement("img");
-                    image.src="public/media/logoImg.png";
+                    image.src=`public/${ownUserImage.innerHTML}`;
                     image.alt="User Image";
                     userImage.appendChild(image);
 
@@ -405,8 +432,16 @@
                     typedTextChild.innerText=chatText;
                     typedText.appendChild(typedTextChild);
 
-                    socket.emit('new_message',chatText);
+                    let nameMessage={
+                        message:chatText,
+                        uName:ownUserName.innerHTML,
+                        image:ownUserImage.innerHTML,
+                    }
+                    
+                    socket.emit('new_message',nameMessage);
                         
+
+
                        chatTyping.value="";
                        chatHistory.scrollTop = chatHistory.scrollHeight;
 
@@ -434,7 +469,7 @@
                     userFirst.appendChild(userImage);
 
                     const image=document.createElement("img");
-                    image.src="public/media/logoImg.png";
+                    image.src=`public/${userDetail.image}`;
                     image.alt="User Image";
                     userImage.appendChild(image);
 
@@ -451,7 +486,8 @@
 
                     const userName=document.createElement("div");
                     userName.className="user-name";
-                    userName.innerText="You (John)"
+                    userName.style.color="#00bc7b"
+                    userName.innerText="~  "+userDetail.name;
                     nameTime.appendChild(userName);
 
                     const chatTime=document.createElement("div");
@@ -464,12 +500,14 @@
                     const month = months[date.getMonth()]; 
                     const year = date.getFullYear(); 
                     let hours = date.getHours(); 
-                   
-                    if(hours==0){
-                        hours=12;
+                    let ampm='AM';
+
+                    if(hours>12){
+                        hours=hours-12;
+                        ampm='PM';
                     }
                     const minutes = date.getMinutes(); 
-                    chatTime.innerText=` ${year}, ${month} ${day},  ${hours}:${minutes}`;
+                    chatTime.innerText=` ${year}, ${month} ${day},  ${hours}:${minutes} ${ampm}`;
                     nameTime.appendChild(chatTime);
 
                     const senderText=document.createElement("div");
