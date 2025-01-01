@@ -3,34 +3,32 @@
 import UserModel from '../models/user.model.js';
 
 export default class UserController{
-
+    constructor() {}
             getUserLogin(req, res){  
 
-                res.render('login')
+                res.render('login', { errorMessage: null }); 
             }
 
-            postLogin(req,res){
-                //console.log(req.body);
-                const {email,password}=req.body;
-                console.log(req.body)
-                const user= UserModel.loginValidator(
-                    email, password
-
-                );
-
-
-                if(user){
-                    return res.render('chat',{user:user});
-                }else{
-                    return res.render('login');
+            async postLogin(req, res) {
+                try {
+                    const { email, password } = req.body;
+                    console.log(req.body);
+        
+                    // Validate user using the database
+                    const user = await UserModel.loginValidator(email, password);
+        
+                    if (user) {
+                        // If user is found, render the chat view
+                        return res.render('chat', { user });
+                    } else {
+                        // If validation fails, reload the login page with an error message
+                        return res.render('login', { errorMessage: 'Invalid email or password' });
+                    }
+                } catch (error) {
+                    console.error("Error during login:", error);
+                    res.status(500).send('Internal Server Error');
                 }
-
-               
-
-
-                   //  res.render('dashboard')
             }
-
 
             getUserRegister(req, res){  
 

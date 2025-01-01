@@ -1,3 +1,5 @@
+import { userModel } from "../schema/user.schema.js";
+
 export default class UserModel{
 
 
@@ -11,7 +13,7 @@ export default class UserModel{
                     
             }
 
-            static addUser(name,email,image,password){
+            static async addUser(name,email,image,password){
                 const newUser=new UserModel(
                     users.length+1,
                     name,
@@ -21,19 +23,52 @@ export default class UserModel{
 
                 )
 
+                
                 users.push(newUser);
                 global.newUser = newUser;
                 console.log(users);
+                
+                const userDb=new userModel({
+                    name,
+                    email,
+                    image,
+                    password,
+                    date:new Date(),
+                }) 
+
+               await userDb.save();
             }
 
-            static loginValidator(email,password){
+            // static loginValidator(email,password){
 
-                    const result=users.find((u)=>{
-                           return u.email===email && u.password===password;
+            //     const result=users.find((u)=>{
+            //         return u.email===email && u.password===password;
 
-                    })
-                    console.log(result);
-                        return result;
+            //  })
+             
+       
+    
+            //   return result;
+    
+    
+    
+            // }
+            static async loginValidator(email, password) {
+                try {
+                    // Find the user in MongoDB
+                    const user = await userModel.findOne({ email, password });
+                    if (user) {
+                        console.log("User found:", user);
+                        return user;
+                    } else {
+                        
+                        console.log("User not found or invalid credentials");
+                        return null;
+                    }
+                } catch (error) {
+                    console.error("Error finding user:", error);
+                    throw error;
+                }
             }
 
 
@@ -42,4 +77,7 @@ export default class UserModel{
 //export const userDetails=newUser;
 export let newUser = null;
 
-let users=[{ id: 1,name: 'abc',email:'abc@123.com',password:'1234'}];
+let users=[{ id: 1,name: 'abc',email:'abc@123.com',image:'images/UserImg-1735750597533-Screenshot 2024-07-09 151919.png',password:'1234'},
+    {id:2,name:"testing",email:"test@1234.com",password:"1111",image:"images/UserImg-1735748081571-Picsart_24-08-06_13-22-56-864.jpg"
+}
+];

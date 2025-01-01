@@ -8,6 +8,7 @@
         html, body {
             height: 100%;
             margin: 0;
+            overflow: hidden;
         }
 
         .left {
@@ -137,6 +138,7 @@
         </style>
 </head>
 <body>
+   
     <div class="left">
         <div class="content">
             <img class="register_image" src="/public/media/logoImg.png" alt="Register Image">
@@ -146,7 +148,7 @@
     <div class="right">
         <img class="logo" src="/public/media/logoImg.png" alt="logo">
         <h3 class="welcome">Welcome Back!</h3>
-       
+        
         <!-- Login Form -->
         <form action="/login" method="post" class="register-form" id="login-form">
             <input type="email" name="email" class="register-input" placeholder="Email" required>
@@ -158,7 +160,11 @@
         <!-- Register Link -->
         <a href="/register" class="login-link">Don't have an account? Register</a>
         <!-- Alert for login -->
-        <div class="alert" id="login-alert"></div>
+        <%if(errorMessage){ %>
+            <div class="alert" id="login-alert" ></div>
+            <%= errorMessage %>
+        </div>
+        <%}%>
     </div>
 </body>
 </html>

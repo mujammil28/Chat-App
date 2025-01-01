@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import http from 'http';
 import { Server } from 'socket.io';
 import { uploadFile } from './src/middlewares/multerMiddleware.js';
-
+import { dbConnect } from './src/middlewares/mongodb.config.js';
 const app=express();
 
 const userController=new UserController();
@@ -110,5 +110,5 @@ app.all('*',userController.pageNotFound );
 server.listen(3000,()=>{
 
         console.log("App is running on the port:3000");
-
+        dbConnect();
 })
