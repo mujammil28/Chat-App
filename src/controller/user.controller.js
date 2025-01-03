@@ -1,7 +1,7 @@
 
 
 import UserModel from '../models/user.model.js';
-
+import { userModel } from '../schema/user.schema.js';
 export default class UserController{
     constructor() {}
             getUserLogin(req, res){  
@@ -19,7 +19,8 @@ export default class UserController{
         
                     if (user) {
                         // If user is found, render the chat view
-                        return res.render('chat', { user });
+                        const users = await userModel.find(); 
+                        return res.render('chat', { user,users });
                     } else {
                         // If validation fails, reload the login page with an error message
                         return res.render('login', { errorMessage: 'Invalid email or password' });

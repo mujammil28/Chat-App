@@ -6,6 +6,10 @@ import http from 'http';
 import { Server } from 'socket.io';
 import { uploadFile } from './src/middlewares/multerMiddleware.js';
 import { dbConnect } from './src/middlewares/mongodb.config.js';
+import { chatDb } from './src/schema/chat.schema.js';
+import {auth} from './src/middlewares/auth.js'
+
+
 const app=express();
 
 const userController=new UserController();
@@ -42,7 +46,7 @@ app.get('/register',userController.getUserRegister)
 
 
 
-app.get('/chat',userController.userChat)
+app.get('/chat',auth,userController.userChat)
 
 
 const server = http.createServer(app);
@@ -57,8 +61,23 @@ io.on('connection',(socket)=>{
 
     console.log("Server socket connection established...")
 
-   
-   
+    console.log(`New user connected: Socket ID - ${socket.id}`);
+
+  // Notify all clients about the new connection
+  io.emit('user_connected', { id: socket.id });
+
+
+
+  chatDb.find().sort({date:1}).limit(50)
+  .then(message=>{
+
+      socket.emit("load_Messages", message);
+   //   console.log(message)
+  }).catch(err=>{
+      console.log(err);
+  })
+
+
 
 
     socket.on('new_message',(message)=>{
@@ -80,14 +99,19 @@ io.on('connection',(socket)=>{
             name:message.uName,
             image:message.image,
         }
+        console.log(message)
+        const chatDataBase= new chatDb({
+                userName:message.uName,
+                message:message.message,
+                dateTime:dateTime,
+                image:message.image,
+        })
 
-        // const chatDataBase= new chatModel({
-        //         userName:socket.userName,
-        //         message:message,
-        //         dateTime:new Date(),
 
-        // })
-       // console.log(userDetail)
+        chatDataBase.save();
+       console.log(chatDataBase)
+       
+
         socket.broadcast.emit('send_message', userDetail);
 
     })
@@ -96,7 +120,7 @@ io.on('connection',(socket)=>{
     socket.on('disconnect',()=>{
 
         console.error("Server socket connection disconnected!!!");
-
+        io.emit('user_disconnected', { id: socket.id });
     })
 }
 

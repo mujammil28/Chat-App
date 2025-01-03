@@ -250,12 +250,20 @@
                 border-bottom-right-radius: 1%;
             }
 
+            .connected-user{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                align-content: center;
+                background-color: rgba(166, 222, 255, 0.886);
+                border: 1px solid white;
+            }
 
             #connected>th{
                 background-color:rgb(32, 161, 235);
                 color:white;
                 height: 7vh;
-                border: 1px solid white;
+             
                 border-radius: 10px;
 
             }
@@ -263,11 +271,13 @@
             .connected-user>td{
 
                     background-color: rgba(166, 222, 255, 0.886);
-                    border: 1px solid white;
+                 
                     border-radius: 5px;
                     display: flex;
-                    justify-content: center;
-                    text-align: center;
+                align-items: center;
+                justify-content: space-between;
+                align-content: center;
+                margin-left: 10px;
                     height: 5vh;
             }
 
@@ -275,9 +285,104 @@
                width:10vw;
               border: 1px solid #ffffff;
             }
+            #circle{
+                height: 15px;
+                width: 15px;
+                background-color: #ff5353;
+                border-radius: 50%;
+                margin-right: 10px;
+            }
+            #circle>strong{
+                margin-left: 10px;
+            }
 
 
-    </style>
+       
+        @media only screen and (max-width: 600px) {
+    body {
+        background-color: #e7e7e7; /* Keep background consistent */
+    }
+
+    #chat-section {
+        display: block; /* Stack the sections vertically */
+        padding: 10px;
+    }
+
+    #chat-box-section {
+        width: 83vw;
+        height: 88vh; /* Allow height to adjust dynamically */
+        margin: 0 auto 20px auto;
+        border-radius: 8px;
+
+    }
+
+    #chat-header {
+        width: 94%;
+        grid-template-columns: 1fr; /* Adjust header layout */
+        padding: 10px;
+        height: 8vh;
+    }
+
+    #chat-history {
+        width: 100%;
+        height: 60vh; /* Limit height for smaller screens */
+    }
+
+    #chat-box {
+        width: 100%;
+    }
+
+    #chating {
+        grid-template-columns: 4fr 1fr; /* Maintain alignment for input and button */
+        gap: 10px;
+    }
+
+    #chat-typing {
+        width: 90%;
+        height: 35px;
+        font-size: 14px;
+    }
+
+    #chat-send-btn {
+        height: 35px;
+        font-size: 14px;
+    }
+
+    .chat-text,
+    .sender-chat-text {
+        width: 80%;
+        font-size: 14px; /* Adjust font size for readability */
+    }
+
+    .chat-time, .user-name {
+        font-size: 12px; /* Adjust text size for timestamps and names */
+    }
+
+    .user-image > img {
+        max-width: 10vw; /* Adjust image size */
+        max-height: 10vh;
+    }
+
+    .connected-user {
+        font-size: 14px;
+        padding: 5px;
+    }
+
+    #group-table {
+        width: 100%; /* Expand the table for smaller screens */
+    }
+
+    #connected > th {
+        font-size: 16px; /* Adjust font size of table headers */
+        height: 5vh;
+    }
+}
+
+
+
+
+
+</style>
 
 
 
@@ -288,7 +393,7 @@
        
         <div id="chat-header">
             <div id="user-name" class="chat-header">Welcome &nbsp; <%=user.name %></div>
-            <div id="user-typing" class="chat-header">User Typing....</div>
+            <div id="user-typing" class="chat-header"></div>
         </div>
         <div id="chat-history" >
             
@@ -342,16 +447,23 @@
          </div>
     
     <div class="connection-area" id="group-connections">
-        <table  id="group-table">
-            <tr id="connected"> <th>connected users</th> </tr>
-                <tr class="connected-user"> <td>user1</td>  </tr>
-              <tr class="connected-user">  <td>user2</td></tr>
-              <tr class="connected-user">  <td>user3</td></tr>
-           
+        <table id="group-table">
+            <tr id="connected">
+                <th>Connected Users</th>
+            </tr>
+            <% users.forEach(user => { %>
+            <tr class="connected-user">
+                <td>
+                    <span id="circle-<%= user.id %>" class="circle"></span>
+                    <strong><%= user.name %></strong>
+                </td>
+            </tr>
+            <% }); %>
         </table>
 
     </div>
-    </div>
+    
+</div>
 
     <script src="/socket.io/socket.io.js"></script>
 
@@ -366,7 +478,11 @@
                     const chatHistory=document.getElementById('chat-history');
                     const ownUserName=document.getElementById('own-user-name');
                     const ownUserImage=document.getElementById('own-user-image');
+                    const userTyping=document.getElementById('user-typing')
+                    const nameOfUser=ownUserName.innerHTML;
 
+        
+                 
                     chating.addEventListener('submit',(event)=>{
 
                         event.preventDefault();
@@ -449,7 +565,63 @@
                         }
                         
                     });
+
+                    socket.on('load_Messages',(messages)=>{
+                messages.forEach(message => {
+                           const messageEle=document.createElement("div");
+
+                //2024-12-24T10:30:20.484Z
+                const userFirst=document.createElement("div")
+                    userFirst.className="user1";
+                     chatHistory.appendChild(userFirst);
+
+                const userImage=document.createElement("div");
+                    userImage.className="user-image";
+                    userFirst.appendChild(userImage);
+
+                    const image=document.createElement("img");
+                    image.src=`public/${message.image}`;
+                    image.alt="User Image";
+                    userImage.appendChild(image);
+
+
+             
+
+                    const chatingText=document.createElement("div");
+                    chatingText.className="chat-text";
+                    userFirst.appendChild(chatingText);
+
+                    const nameTime=document.createElement("div");
+                    nameTime.className="name-time";
+                    chatingText.appendChild(nameTime);
+
+                    const userName=document.createElement("div");
+                    userName.className="user-name";
+                    userName.style.color="#00bc7b";
+                    console.log(message)
+                    userName.innerText="~  "+message.userName;
+                    nameTime.appendChild(userName);
+
+                    const chatTime=document.createElement("div");
+                    chatTime.className="chat-time"; 
+                    chatTime.innerText=message.dateTime;
+                    nameTime.appendChild(chatTime);
+
+                    const senderText=document.createElement("div");
+                    senderText.className="sender-text";
+                    chatingText.appendChild(senderText);
+                        
                     
+
+                     
+                    const typedTextChild=document.createElement("div");
+                    typedTextChild.innerText=message.message;
+                    senderText.appendChild(typedTextChild);
+
+               
+                    });
+               
+            })
 
                
                     socket.on('send_message',(userDetail)=>{
