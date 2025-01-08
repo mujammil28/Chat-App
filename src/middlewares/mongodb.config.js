@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 
-const url="mongodb://localhost:27017/chatter-up";
+const url="mongodb+srv://mujammil28012002:QAXq7bJ5qxSAqw8z@usercluster.d8xpj.mongodb.net/?retryWrites=true&w=majority&appName=UserCluster";
 
 export const dbConnect=async()=>{
 try{
