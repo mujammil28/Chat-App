@@ -1,6 +1,8 @@
 Download The project and Simply run the command "npm i" in integrated terminal
 
+OR
 
+Checkout project here:[(https://chat-app-kyuc.onrender.com/)]
 
 
 
