@@ -103,7 +103,7 @@ io.on('connection',(socket)=>{
         const chatDataBase= new chatDb({
                 userName:message.uName,
                 message:message.message,
-                dateTime:dateTime,
+                dateTime:message.dateTime,
                 image:message.image,
         })
 
